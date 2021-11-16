@@ -13,17 +13,18 @@ namespace simpleApi.Controllers
     [ApiController]
     public class ProjectsController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Get()
+
+        private List<Project> projects = null;
+        public ProjectsController()
         {
-            var projects = new List<Project>
+            projects = new List<Project>
             {
                 new Project {
                     CategoryId=1, Name="Genel Sağlık Uygulamaları", Description="bla bla", Id=1, Tasks=new List<Task>{ new Task {
                         Id=1,
-                        Name="veritabanı konfigürasyonu", 
-                        Description="Test", 
-                        ExpectedDate=DateTime.Now.AddDays(18), 
+                        Name="veritabanı konfigürasyonu",
+                        Description="Test",
+                        ExpectedDate=DateTime.Now.AddDays(18),
                         IsDone=false},
 
                         new Task {
@@ -77,7 +78,18 @@ namespace simpleApi.Controllers
 
                     }}
             };
+        }
+        [HttpGet]
+        public IActionResult Get()
+        {
+
             return Ok(projects);
+        }
+        [HttpGet("{id}")]
+        public IActionResult GetByCategory(int id)
+        {
+            var result = this.projects.Where(p => p.CategoryId == id);
+            return Ok(result);
         }
     }
 }
