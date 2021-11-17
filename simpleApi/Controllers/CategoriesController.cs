@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using simpleApi.Models;
+using simpleApi.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +13,24 @@ namespace simpleApi.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
+        private FakeCategories categories;
+
+        public CategoriesController(FakeCategories categories)
+        {
+            this.categories = categories;
+        }
         [HttpGet]
         public IActionResult Get()
         {
-            var categories = new List<Category>
-            {
-                new Category{ Id =1, Name ="Sağlık Bakanlığı"},
-                new Category{ Id =2, Name ="Finans"},
-                new Category{ Id =3, Name ="İletişim"},
-
-
-            };
+         
             return Ok(categories);
+        }
+
+        [HttpPost]
+        public IActionResult AddCategory(Category category)
+        {
+            categories.AddCategory(category);
+            return Created("https://eklendi.com", category);
         }
     }
 }

@@ -91,5 +91,11 @@ namespace simpleApi.Controllers
             var result = this.projects.Where(p => p.CategoryId == id);
             return Ok(result);
         }
+        [HttpPost]
+        public IActionResult AddProject(Project project)
+        {
+            //eklendi...
+            return Created("http://eklendi.com", project);
+        }
     }
 }
